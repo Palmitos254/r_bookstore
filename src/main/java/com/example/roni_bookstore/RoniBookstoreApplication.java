@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.roni_bookstore.domain.Book;
 import com.example.roni_bookstore.domain.BookRepository;
+import com.example.roni_bookstore.domain.Category;
+import com.example.roni_bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 public class RoniBookstoreApplication {
@@ -19,17 +21,23 @@ public class RoniBookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository repository) {
+	public CommandLineRunner bookDemo(BookRepository repository, CategoryRepository crepository) {
 		return (args) -> {
 			log.info("save a couple of students");
-			repository.save(new Book("J.K Rowling", "Harry Potter", "030-2211-3-8756-07", 1997, 22));
-			repository.save(new Book("Edgar Rice Burroughs", "John Carter", "030-2630-0-85-0768", 1964, 16));
+			crepository.save(new Category("Fantasy"));
+			crepository.save(new Category("Mystery"));
+			crepository.save(new Category("Scifi"));
+			crepository.save(new Category("Horror"));
+
+			repository.save(new Book("Stephen King", "IT", "030-2211-3-8756-07", 1986, 22,
+					crepository.findByName("Horror").get(0)));
+			repository.save(new Book("Edgar Rice Burroughs", "John Carter", "030-2630-0-85-0768", 1964, 16,
+					crepository.findByName("Fantasy").get(0)));
 
 			log.info("fetch all students");
 			for (Book book : repository.findAll()) {
 				log.info(book.toString());
 			}
-
 		};
 	}
 }
