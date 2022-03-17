@@ -57,14 +57,14 @@ public class BookController {
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
 		repository.deleteById(bookId);
 		return "redirect:../booklist";
 	}
 
 	@RequestMapping("/edit/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
 		model.addAttribute("book", repository.findById(bookId));
 		model.addAttribute("categories", crepository.findAll());
