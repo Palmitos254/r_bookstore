@@ -8,4 +8,4 @@ COPY mvnw pom.xml ./
 
 COPY src ./src
 
-CMD ["./mvnw", "src\main\java\com\example\roni_bookstore\RoniBookstoreApplication.java:run"]
+CMD ["./mvnw", "./src/main/java/com/example/roni_bookstore/RoniBookstoreApplication.java:run"]
